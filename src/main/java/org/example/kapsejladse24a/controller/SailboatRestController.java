@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class SailboatRestController {
     @Autowired
     SailboatRepository sailboatRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public List<Sailboat> findAll(){
         return sailboatRepository.findAll();
     }
@@ -50,8 +51,12 @@ public class SailboatRestController {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-
+    @PostMapping
+    public ResponseEntity<Sailboat> createSailboat(@RequestBody Sailboat sailboat) {
+        Sailboat saved = sailboatRepository.save(sailboat);
+        URI location = URI.create("/sailboats/" + saved.getBoatID());
+        return ResponseEntity.created(location).body(saved);
+    }
 
 
 }
