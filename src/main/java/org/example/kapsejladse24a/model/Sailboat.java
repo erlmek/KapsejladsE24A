@@ -1,9 +1,9 @@
 package org.example.kapsejladse24a.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Sailboat {
@@ -13,6 +13,9 @@ public class Sailboat {
     private int boatID;
     private BoatType boatType;
     private String name;
+
+    @OneToMany(mappedBy = "sailboat")
+    private Set<Result> results = new HashSet<>();
 
     public int getBoatID() {
         return boatID;
